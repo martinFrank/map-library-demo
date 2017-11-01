@@ -42,7 +42,6 @@ public class DemoApplication{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				super.mousePressed(e);
-				System.out.println();
 				MapField<FieldData, EdgeData, PointData> field = map.getField(e.getX(), e.getY());
 				MapEdge<EdgeData, PointData> edge =  map.getEdge(e.getX(), e.getY());
 				MapPoint<PointData> point =  map.getPoint(e.getX(), e.getY());

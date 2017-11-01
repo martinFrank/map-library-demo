@@ -10,7 +10,7 @@ public class DemoMapFactory implements MapFactory<FieldData, EdgeData, PointData
 
 	@Override
 	public MapPoint<PointData> createPoint(int x, int y) {		
-		return new DemoMapPoint<PointData>(x,y);
+		return new DemoMapPoint(x,y);
 	}
 
 	@Override

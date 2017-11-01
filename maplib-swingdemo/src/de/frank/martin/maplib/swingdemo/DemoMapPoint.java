@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import de.frank.martin.maplib.AbstractPoint;
 
-public class DemoMapPoint<T> extends AbstractPoint<PointData> {
+public class DemoMapPoint extends AbstractPoint<PointData> {
 
 	private PointData pointData = new PointData();
 

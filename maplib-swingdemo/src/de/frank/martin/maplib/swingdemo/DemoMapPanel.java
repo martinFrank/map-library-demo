@@ -11,7 +11,7 @@ import de.frank.martin.maplib.Map;
 @SuppressWarnings("serial")
 public class DemoMapPanel extends JPanel {
 
-	private final Map<FieldData, EdgeData, PointData> map;
+	private final transient Map<FieldData, EdgeData, PointData> map;
 	public DemoMapPanel(Map<FieldData, EdgeData, PointData> map){
 		if(map == null){
 			throw new InvalidParameterException("map must be set");

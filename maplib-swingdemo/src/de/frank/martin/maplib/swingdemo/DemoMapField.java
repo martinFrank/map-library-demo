@@ -32,8 +32,8 @@ public class DemoMapField extends AbstractField<FieldData, EdgeData, PointData> 
 		Graphics2D gr = (Graphics2D) graphics;
 		
 		//first we draw the field
-		int[] xs = getPoints().stream().mapToInt(e->e.getTransformedX()).toArray();
-		int[] ys = getPoints().stream().mapToInt(e->e.getTransformedY()).toArray();
+		int[] xs = getPoints().stream().mapToInt(MapPoint::getTransformedX).toArray();
+		int[] ys = getPoints().stream().mapToInt(MapPoint::getTransformedY).toArray();
 		int size = xs.length;
 		if(getFieldData().isSelected()){
 			gr.setColor(Color.GRAY);
