@@ -1,2 +1,2 @@
-# map-library-swing-demo
+# map-library-demo
 demo implementation for the map library
