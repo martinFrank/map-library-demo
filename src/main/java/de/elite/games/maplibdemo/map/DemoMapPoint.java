@@ -1,31 +1,26 @@
 package de.elite.games.maplibdemo.map;
 
+import de.elite.games.maplib.MapPoint;
 import de.elite.games.maplibdemo.mapdata.MapPointData;
-import de.elite.games.maplib.AbstractPoint;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DemoMapPoint extends AbstractPoint<MapPointData> {
+public class DemoMapPoint extends MapPoint<MapPointData, DemoMapField, DemoMapEdge, DemoMapPoint> {
 
     private MapPointData mapPointData;
 
-    /**
-     * A Point at a certain location
-     *
-     * @param x location
-     * @param y
-     */
     public DemoMapPoint(int x, int y) {
         super(x, y);
     }
 
+
     @Override
-    public MapPointData getPointData() {
+    public MapPointData getData() {
         return mapPointData;
     }
 
     @Override
-    public void setPointData(MapPointData mapPointData) {
+    public void setData(MapPointData mapPointData) {
         this.mapPointData = mapPointData;
     }
 

@@ -6,7 +6,7 @@
 
   <groupId>de.elite.games.maplibdemo</groupId>
   <artifactId>maplibdemo</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
 
   <name>maplibdemo</name>
   <!-- FIXME change it to the project's website -->
@@ -28,7 +28,7 @@
     <dependency>
       <groupId>de.elite.games</groupId>
       <artifactId>maplib</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.2.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

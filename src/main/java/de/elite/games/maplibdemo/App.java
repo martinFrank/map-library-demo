@@ -1,6 +1,5 @@
 package de.elite.games.maplibdemo;
 
-import de.elite.games.maplib.MapFactory;
 import de.elite.games.maplib.MapStyle;
 import de.elite.games.maplibdemo.map.*;
 import javafx.application.Application;
@@ -16,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -36,11 +36,11 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         DemoMapPartFactory mapPartFactory = new DemoMapPartFactory();
-        MapFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoWalker> mapFactory = new MapFactory<>(mapPartFactory, MapStyle.HEX_VERTICAL);
-        demoMap = mapFactory.createMap(5, 4);
+        DemoMapFactory mapFactory = new DemoMapFactory(mapPartFactory);
+        demoMap = mapFactory.createMap(5, 4, MapStyle.HEX_VERTICAL);
         demoMap.scale(12f);
         demoMap.pan(10, 10);
-        walker = mapFactory.createWalker();
+        walker = mapPartFactory.createWalker();
 
         shuffleWalkCosts();
 
@@ -50,26 +50,26 @@ public class App extends Application {
         canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             int x = (int) mouseEvent.getX();
             int y = (int) mouseEvent.getY();
-            DemoMapPoint point = demoMap.getPoint(x, y);
-            DemoMapEdge edge = demoMap.getEdge(x, y);
-            DemoMapField field = demoMap.getField(x, y);
+            Optional<DemoMapPoint> point = demoMap.getPoint(x, y);
+            Optional<DemoMapEdge> edge = demoMap.getEdge(x, y);
+            Optional<DemoMapField> field = demoMap.getField(x, y);
             LOGGER.debug("x/y:{}/{} Point:{}", x, y, point);
             LOGGER.debug("x/y:{}/{} Edge:{} ", x, y, edge);
-            LOGGER.debug("x/y:{}/{} Field:{}, index{} ", x, y, field, (field == null ? "" : field.getIndex()));
+            LOGGER.debug("x/y:{}/{} Field:{}, index{} ", x, y, field, (field.isPresent() ? field.get().getIndex() : ""));
 
-            if (mouseEvent.getButton() == MouseButton.PRIMARY && field != null) {
-                start = field;
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && field.isPresent()) {
+                start = field.get();
             }
-            if (mouseEvent.getButton() == MouseButton.SECONDARY && field != null) {
-                end = field;
+            if (mouseEvent.getButton() == MouseButton.SECONDARY && field.isPresent()) {
+                end = field.get();
             }
             if (start != null && !start.equals(end)) {
                 for (DemoMapField any : demoMap.getFields()) {
-                    any.getFieldData().markAsPath(false);
+                    any.getData().markAsPath(false);
                 }
                 List<DemoMapField> path = demoMap.aStar(start, end, walker, 10);
                 for (DemoMapField pathField : path) {
-                    pathField.getFieldData().markAsPath(true);
+                    pathField.getData().markAsPath(true);
                 }
                 GraphicsContext gc = canvas.getGraphicsContext2D();
                 drawShapes(gc);
@@ -97,13 +97,13 @@ public class App extends Application {
     private void shuffleWalkCosts() {
         Random random = new Random();
         for (DemoMapField demoMapField : demoMap.getFields()) {
-            demoMapField.getFieldData().setWalkCostFactor(1d);
+            demoMapField.getData().setWalkCostFactor(1d);
             int die = random.nextInt(6) + 1;
             if (die == 1) {
-                demoMapField.getFieldData().setWalkCostFactor(6d);
+                demoMapField.getData().setWalkCostFactor(6d);
             }
             if (die == 2) {
-                demoMapField.getFieldData().setWalkCostFactor(3d);
+                demoMapField.getData().setWalkCostFactor(3d);
             }
         }
     }

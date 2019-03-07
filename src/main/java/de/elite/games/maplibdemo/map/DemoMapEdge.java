@@ -1,11 +1,11 @@
 package de.elite.games.maplibdemo.map;
 
-import de.elite.games.maplib.AbstractEdge;
+import de.elite.games.maplib.MapEdge;
 import de.elite.games.maplibdemo.mapdata.MapEdgeData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DemoMapEdge extends AbstractEdge<MapEdgeData, DemoMapPoint> {
+public class DemoMapEdge extends MapEdge<MapEdgeData, DemoMapField, DemoMapEdge, DemoMapPoint> {
 
     private MapEdgeData mapEdgeData;
 
@@ -14,12 +14,12 @@ public class DemoMapEdge extends AbstractEdge<MapEdgeData, DemoMapPoint> {
     }
 
     @Override
-    public MapEdgeData getEdgeData() {
+    public MapEdgeData getData() {
         return mapEdgeData;
     }
 
     @Override
-    public void setEdgeData(MapEdgeData mapEdgeData) {
+    public void setData(MapEdgeData mapEdgeData) {
         this.mapEdgeData = mapEdgeData;
     }
 
