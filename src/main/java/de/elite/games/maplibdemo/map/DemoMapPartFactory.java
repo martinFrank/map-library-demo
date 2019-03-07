@@ -2,7 +2,6 @@ package de.elite.games.maplibdemo.map;
 
 import de.elite.games.maplib.MapPartFactory;
 import de.elite.games.maplib.MapStyle;
-import de.elite.games.maplibdemo.DemoWalker;
 
 public class DemoMapPartFactory implements MapPartFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoWalker> {
 

@@ -1,8 +1,7 @@
-package de.elite.games.maplibdemo;
+package de.elite.games.maplibdemo.map;
 
 import de.elite.games.maplib.MapStyle;
 import de.elite.games.maplib.Walker;
-import de.elite.games.maplibdemo.map.DemoMapField;
 
 public class DemoWalker extends Walker<DemoMapField> {
 
