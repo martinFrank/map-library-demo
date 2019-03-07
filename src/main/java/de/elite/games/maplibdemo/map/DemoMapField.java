@@ -9,12 +9,9 @@ import javafx.scene.paint.Color;
 
 public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEdge, DemoMapPoint> {
 
-    private MapFieldData mapFieldData = new MapFieldData();
-
-    public DemoMapField(GeoPoint index) {
-        super(index);
+    public DemoMapField(GeoPoint index, MapFieldData mapFieldData) {
+        super(index, mapFieldData);
     }
-
 
     @Override
     public void draw(Object drawContext) {
@@ -45,13 +42,4 @@ public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEd
         getPoints().forEach(p -> p.draw(drawContext));
     }
 
-    @Override
-    public MapFieldData getData() {
-        return mapFieldData;
-    }
-
-    @Override
-    public void setData(MapFieldData mapFieldData) {
-        this.mapFieldData = mapFieldData;
-    }
 }

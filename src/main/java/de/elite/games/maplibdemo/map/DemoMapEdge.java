@@ -7,20 +7,8 @@ import javafx.scene.paint.Color;
 
 public class DemoMapEdge extends MapEdge<MapEdgeData, DemoMapField, DemoMapEdge, DemoMapPoint> {
 
-    private MapEdgeData mapEdgeData;
-
-    public DemoMapEdge(DemoMapPoint a, DemoMapPoint b) {
-        super(a, b);
-    }
-
-    @Override
-    public MapEdgeData getData() {
-        return mapEdgeData;
-    }
-
-    @Override
-    public void setData(MapEdgeData mapEdgeData) {
-        this.mapEdgeData = mapEdgeData;
+    public DemoMapEdge(DemoMapPoint a, DemoMapPoint b, MapEdgeData mapEdgeData) {
+        super(a, b, mapEdgeData);
     }
 
     @Override

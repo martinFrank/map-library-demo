@@ -7,21 +7,8 @@ import javafx.scene.paint.Color;
 
 public class DemoMapPoint extends MapPoint<MapPointData, DemoMapField, DemoMapEdge, DemoMapPoint> {
 
-    private MapPointData mapPointData;
-
-    public DemoMapPoint(int x, int y) {
-        super(x, y);
-    }
-
-
-    @Override
-    public MapPointData getData() {
-        return mapPointData;
-    }
-
-    @Override
-    public void setData(MapPointData mapPointData) {
-        this.mapPointData = mapPointData;
+    public DemoMapPoint(int x, int y, MapPointData mapPointData) {
+        super(x, y, mapPointData);
     }
 
     @Override

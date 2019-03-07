@@ -4,13 +4,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>de.elite.games.maplibdemo</groupId>
+  <groupId>de.elite.games</groupId>
   <artifactId>maplibdemo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <name>maplibdemo</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>de.elite.games</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +28,7 @@
     <dependency>
       <groupId>de.elite.games</groupId>
       <artifactId>maplib</artifactId>
-      <version>0.2.0</version>
+      <version>0.2.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
