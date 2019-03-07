@@ -1,6 +1,7 @@
 package de.elite.games.maplibdemo;
 
-import de.elite.games.maplib.*;
+import de.elite.games.maplib.MapFactory;
+import de.elite.games.maplib.MapStyle;
 import de.elite.games.maplibdemo.map.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,12 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class App extends Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
     private DemoMap demoMap;
+    private DemoWalker walker;
 
     public static void main(String[] args) {
         launch(args);
@@ -28,35 +31,25 @@ public class App extends Application {
 
     private DemoMapField start;
     private DemoMapField end;
-    private Walker walker = new Walker() {
 
-        @Override
-        public boolean canEnter(MapField<?, ?, ?> from, MapField<?, ?, ?> into) {
-            return true;
-        }
-
-    };
 
     @Override
     public void start(Stage primaryStage) {
 
 
         DemoMapPartFactory mapPartFactory = new DemoMapPartFactory();
-        MapFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint> mapFactory = new MapFactory<>(mapPartFactory, MapStyle.HEX_VERTICAL);
+        MapFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoWalker> mapFactory = new MapFactory<>(mapPartFactory, MapStyle.HEX_VERTICAL);
 
         demoMap = mapFactory.createMap(5, 4);
         demoMap.scale(12f);
         demoMap.pan(10, 10);
 
+        shuffleWalkCosts();
+        walker = mapFactory.createWalker();
+
 
         primaryStage.setTitle("Hello World!");
         BorderPane border = new BorderPane();
-
-
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        border.setBottom(btn);
-
 
 
         Canvas canvas = new Canvas(300, 250);
@@ -68,22 +61,20 @@ public class App extends Application {
             DemoMapField field = demoMap.getField(x, y);
             System.out.println("x/y=" + x + "/" + y + " Point: " + point);
             System.out.println("x/y=" + x + "/" + y + " Edge : " + edge);
-            System.out.println("x/y=" + x + "/" + y + " field: " + field+"  index="+(field==null?"":field.getIndex()) );
+            System.out.println("x/y=" + x + "/" + y + " field: " + field + "  index=" + (field == null ? "" : field.getIndex()));
 
-            if (mouseEvent.getButton() == MouseButton.PRIMARY && field != null){
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && field != null) {
                 start = field;
             }
-
-            if (mouseEvent.getButton() == MouseButton.SECONDARY&& field != null){
+            if (mouseEvent.getButton() == MouseButton.SECONDARY && field != null) {
                 end = field;
             }
-
-            if(start!= null && !start.equals(end)){
-                for (DemoMapField any: demoMap.getFields()){
+            if (start != null && !start.equals(end)) {
+                for (DemoMapField any : demoMap.getFields()) {
                     any.getFieldData().markAsPath(false);
                 }
                 List<DemoMapField> path = demoMap.aStar(start, end, walker, 10);
-                for (DemoMapField pathField: path){
+                for (DemoMapField pathField : path) {
                     pathField.getFieldData().markAsPath(true);
                 }
                 GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -92,16 +83,38 @@ public class App extends Application {
 
         });
 
+        Button btn = new Button();
+        btn.setText("Shuffle Map");
+        btn.setOnAction(event -> {
+            shuffleWalkCosts();
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            drawShapes(gc);
+        });
+        border.setBottom(btn);
+
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
         drawShapes(gc);
 
         border.setCenter(canvas);
-//        primaryStage.setScene(new Scene(border, 300, 250));
         primaryStage.setScene(new Scene(border));
         primaryStage.show();
     }
 
+    private void shuffleWalkCosts() {
+        Random random = new Random();
+        for (DemoMapField demoMapField : demoMap.getFields()) {
+            demoMapField.getFieldData().setWalkCostFactor(1d);
+            int die = random.nextInt(6) + 1;
+            if (die == 1) {
+                demoMapField.getFieldData().setWalkCostFactor(6d);
+            }
+            if (die == 2) {
+                demoMapField.getFieldData().setWalkCostFactor(3d);
+            }
+
+        }
+    }
 
 
     private void drawShapes(GraphicsContext gc) {

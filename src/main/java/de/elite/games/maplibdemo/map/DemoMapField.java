@@ -30,8 +30,17 @@ public class DemoMapField extends AbstractField<MapFieldData, DemoMapEdge, DemoM
         GraphicsContext gc = (GraphicsContext) drawContext;
 
         gc.setFill(Color.GRAY);
+        if (getFieldData().getWalkCostFactor() >= 1) {
+            gc.setFill(Color.LIGHTGRAY);
+        }
+        if (getFieldData().getWalkCostFactor() >= 3) {
+            gc.setFill(Color.DARKGRAY);
+        }
+        if (getFieldData().getWalkCostFactor() >= 6) {
+            gc.setFill(Color.BLACK);
+        }
         if (getFieldData().isMarkedAsPath()){
-            gc.setFill(Color.WHITE);
+            gc.setFill(Color.YELLOW);
         }
         gc.setStroke(Color.DARKGRAY);
         gc.setLineWidth(1);

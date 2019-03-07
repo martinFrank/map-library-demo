@@ -1,8 +1,10 @@
 package de.elite.games.maplibdemo.map;
 
 import de.elite.games.maplib.MapPartFactory;
+import de.elite.games.maplib.MapStyle;
+import de.elite.games.maplibdemo.DemoWalker;
 
-public class DemoMapPartFactory implements MapPartFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint> {
+public class DemoMapPartFactory implements MapPartFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoWalker> {
 
     @Override
     public DemoMapPoint createPoint(int x, int y) {
@@ -19,10 +21,13 @@ public class DemoMapPartFactory implements MapPartFactory<DemoMap, DemoMapField,
         return new DemoMapEdge(a,b);
     }
 
-
     @Override
     public DemoMap createMap(int width, int height) {
         return new DemoMap (width, height);
     }
 
+    @Override
+    public DemoWalker createWalker(MapStyle style) {
+        return new DemoWalker(style);
+    }
 }
