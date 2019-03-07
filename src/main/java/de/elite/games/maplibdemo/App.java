@@ -23,7 +23,7 @@ public class App extends Application {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
     private DemoMap demoMap;
-    private DemoWalker walker;
+    private DemoMapWalker walker;
 
     public static void main(String[] args) {
         launch(args);

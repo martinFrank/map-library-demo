@@ -4,7 +4,7 @@ import de.elite.games.geolib.GeoPoint;
 import de.elite.games.maplib.MapPartFactory;
 import de.elite.games.maplib.MapStyle;
 
-public class DemoMapPartFactory extends MapPartFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoWalker> {
+public class DemoMapPartFactory extends MapPartFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoMapWalker> {
 
     @Override
     public DemoMapPoint createMapPoint(int x, int y) {
@@ -27,7 +27,7 @@ public class DemoMapPartFactory extends MapPartFactory<DemoMap, DemoMapField, De
     }
 
     @Override
-    public DemoWalker createWalker() {
-        return new DemoWalker();
+    public DemoMapWalker createWalker() {
+        return new DemoMapWalker();
     }
 }
