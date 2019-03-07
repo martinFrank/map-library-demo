@@ -35,23 +35,17 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-
         DemoMapPartFactory mapPartFactory = new DemoMapPartFactory();
         MapFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoWalker> mapFactory = new MapFactory<>(mapPartFactory, MapStyle.HEX_VERTICAL);
-
         demoMap = mapFactory.createMap(5, 4);
         demoMap.scale(12f);
         demoMap.pan(10, 10);
-
-        shuffleWalkCosts();
         walker = mapFactory.createWalker();
 
+        shuffleWalkCosts();
 
         primaryStage.setTitle("Hello World!");
         BorderPane border = new BorderPane();
-
-
         Canvas canvas = new Canvas(300, 250);
         canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             int x = (int) mouseEvent.getX();
@@ -59,9 +53,9 @@ public class App extends Application {
             DemoMapPoint point = demoMap.getPoint(x, y);
             DemoMapEdge edge = demoMap.getEdge(x, y);
             DemoMapField field = demoMap.getField(x, y);
-            System.out.println("x/y=" + x + "/" + y + " Point: " + point);
-            System.out.println("x/y=" + x + "/" + y + " Edge : " + edge);
-            System.out.println("x/y=" + x + "/" + y + " field: " + field + "  index=" + (field == null ? "" : field.getIndex()));
+            LOGGER.debug("x/y:{}/{} Point:{}", x, y, point);
+            LOGGER.debug("x/y:{}/{} Edge:{} ", x, y, edge);
+            LOGGER.debug("x/y:{}/{} Field:{}, index{} ", x, y, field, (field == null ? "" : field.getIndex()));
 
             if (mouseEvent.getButton() == MouseButton.PRIMARY && field != null) {
                 start = field;
@@ -92,7 +86,6 @@ public class App extends Application {
         });
         border.setBottom(btn);
 
-
         GraphicsContext gc = canvas.getGraphicsContext2D();
         drawShapes(gc);
 
@@ -112,7 +105,6 @@ public class App extends Application {
             if (die == 2) {
                 demoMapField.getFieldData().setWalkCostFactor(3d);
             }
-
         }
     }
 
