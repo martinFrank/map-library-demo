@@ -33,7 +33,7 @@ public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEd
         gc.setStroke(Color.DARKGRAY);
         gc.setLineWidth(1);
 
-        Shape shape = getTransformed();
+        Shape shape = getShape().getTransformed();
         double[] xs = shape.getPoints().stream().mapToDouble(Point::getX).toArray();
         double[] ys = shape.getPoints().stream().mapToDouble(Point::getY).toArray();
         int amount = xs.length;
