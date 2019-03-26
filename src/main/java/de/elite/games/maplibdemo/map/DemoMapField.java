@@ -1,16 +1,16 @@
 package de.elite.games.maplibdemo.map;
 
-import de.elite.games.geolib.GeoPoint;
+import de.elite.games.drawlib.Point;
+import de.elite.games.drawlib.Shape;
 import de.elite.games.maplib.MapField;
-import de.elite.games.maplib.MapPoint;
 import de.elite.games.maplibdemo.mapdata.MapFieldData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEdge, DemoMapPoint> {
 
-    public DemoMapField(GeoPoint index, MapFieldData mapFieldData) {
-        super(index, mapFieldData);
+    public DemoMapField(MapFieldData mapFieldData) {
+        super(mapFieldData);
     }
 
     @Override
@@ -33,13 +33,14 @@ public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEd
         gc.setStroke(Color.DARKGRAY);
         gc.setLineWidth(1);
 
-        double[] xs = getPointsOrdered().stream().mapToDouble(MapPoint::getTransformedX).toArray();
-        double[] ys = getPointsOrdered().stream().mapToDouble(MapPoint::getTransformedY).toArray();
-        int amount = getPoints().size();
+        Shape shape = getTransformed();
+        double[] xs = shape.getPoints().stream().mapToDouble(Point::getX).toArray();
+        double[] ys = shape.getPoints().stream().mapToDouble(Point::getY).toArray();
+        int amount = xs.length;
         gc.fillPolygon(xs,ys, amount);
 
         getEdges().forEach(e -> e.draw(drawContext));
-        getPoints().forEach(p -> p.draw(drawContext));
+        getNodes().forEach(p -> p.draw(drawContext));
     }
 
 }

@@ -37,25 +37,26 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         DemoMapPartFactory mapPartFactory = new DemoMapPartFactory();
         DemoMapFactory mapFactory = new DemoMapFactory(mapPartFactory);
-        demoMap = mapFactory.createMap(5, 4, MapStyle.HEX_VERTICAL);
-        demoMap.scale(12f);
-        demoMap.pan(10, 10);
+        demoMap = mapFactory.createMap(12, 6, MapStyle.HEX_HORIZONTAL);
+        demoMap.scale(14f);
         walker = mapPartFactory.createWalker();
 
         shuffleWalkCosts();
 
         primaryStage.setTitle("Hello World!");
         BorderPane border = new BorderPane();
-        Canvas canvas = new Canvas(300, 250);
+        double w = demoMap.getTransformed().getWidth();
+        double h = demoMap.getTransformed().getHeight();
+        Canvas canvas = new Canvas(w, h);
         canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             int x = (int) mouseEvent.getX();
             int y = (int) mouseEvent.getY();
-            Optional<DemoMapPoint> point = demoMap.getPoint(x, y);
-            Optional<DemoMapEdge> edge = demoMap.getEdge(x, y);
-            Optional<DemoMapField> field = demoMap.getField(x, y);
+            Optional<DemoMapPoint> point = demoMap.getNodeAt(x, y);
+            Optional<DemoMapEdge> edge = demoMap.getEdgeAt(x, y);
+            Optional<DemoMapField> field = demoMap.getFieldAt(x, y);
             LOGGER.debug("x/y:{}/{} Point:{}", x, y, point);
-            LOGGER.debug("x/y:{}/{} Edge:{} ", x, y, edge);
-            LOGGER.debug("x/y:{}/{} Field:{}, index{} ", x, y, field, (field.isPresent() ? field.get().getIndex() : ""));
+            LOGGER.debug("x/y:{}/{} Edge:{}", x, y, edge);
+            LOGGER.debug("x/y:{}/{} Field:{}", x, y, field);
 
             if (mouseEvent.getButton() == MouseButton.PRIMARY && field.isPresent()) {
                 start = field.get();
@@ -67,7 +68,7 @@ public class App extends Application {
                 for (DemoMapField any : demoMap.getFields()) {
                     any.getData().markAsPath(false);
                 }
-                List<DemoMapField> path = demoMap.aStar(start, end, walker, 10);
+                List<DemoMapField> path = demoMap.aStar(start, end, walker, 100);
                 for (DemoMapField pathField : path) {
                     pathField.getData().markAsPath(true);
                 }
@@ -98,6 +99,7 @@ public class App extends Application {
         Random random = new Random();
         for (DemoMapField demoMapField : demoMap.getFields()) {
             demoMapField.getData().setWalkCostFactor(1d);
+            demoMapField.getData().markAsPath(false);
             int die = random.nextInt(6) + 1;
             if (die == 1) {
                 demoMapField.getData().setWalkCostFactor(6d);
@@ -106,6 +108,8 @@ public class App extends Application {
                 demoMapField.getData().setWalkCostFactor(3d);
             }
         }
+        start = null;
+        end = null;
     }
 
 

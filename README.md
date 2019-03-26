@@ -15,7 +15,7 @@ you have to define you own, custom MapParts:
  + Map
  + MapField
  + MapEdge
- + MapPoint
+ + MapNode
  + MapWalker3 *)
 
 each of this MapParts requires it's own data-container which mus be defines. The ```MapWalker``` doesn't has
