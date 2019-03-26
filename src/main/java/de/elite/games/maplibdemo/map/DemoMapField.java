@@ -7,7 +7,7 @@ import de.elite.games.maplibdemo.mapdata.MapFieldData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEdge, DemoMapPoint> {
+public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEdge, DemoMapNode> {
 
     public DemoMapField(MapFieldData mapFieldData) {
         super(mapFieldData);

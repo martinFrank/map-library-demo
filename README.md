@@ -16,26 +16,24 @@ you have to define you own, custom MapParts:
  + MapField
  + MapEdge
  + MapNode
- + MapWalker3 *)
+ + MapWalker *)
 
 each of this MapParts requires it's own data-container which mus be defines. The ```MapWalker``` doesn't has
 any custom data.
 
  + MapData
- + FieldData
- + EdgeData
- + PointData
+ + MapFieldData
+ + MapEdgeData
+ + MapNodeData
 
 here's an example of how to this, namely on an ```MapField```. Note that the ```MapFieldData``` is generic and can be any cass you
 desire
 
 ```
-    public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEdge, DemoMapPoint> {
+    public class DemoMapField extends MapField<MapFieldData, DemoMapField, DemoMapEdge, DemoMapNode> {
 
-        private MapFieldData mapFieldData = new MapFieldData();
-
-        public DemoMapField(GeoPoint index) {
-            super(index);
+        public DemoMapField(MapFieldData mapFieldData) {
+            super(mapFieldData);
         }
 
         @Override
@@ -43,15 +41,6 @@ desire
             //custom draw here
         }
 
-        @Override
-        public MapFieldData getData() {
-            return mapFieldData;
-        }
-
-        @Override
-        public void setData(MapFieldData mapFieldData) {
-            this.mapFieldData = mapFieldData;
-        }
     }
 ```
 
@@ -61,16 +50,16 @@ To create maps you have to implement the ```MapPartFactory```. that's pretty str
     public class DemoMapPartFactory extends MapPartFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapPoint, DemoMapWalker> {
 
         @Override
-        public DemoMapPoint createMapPoint(int x, int y) { return new DemoMapPoint(x, y); }
+        public DemoMapNode createMapNode() { return new DemoMapNode(new MapNodeData()); }
 
         @Override
-        public DemoMapEdge createMapEdge(DemoMapPoint a, DemoMapPoint b) { return new DemoMapEdge(a, b); }
+        public DemoMapEdge createMapEdge() { return new DemoMapEdge(new MapEdgeData()); }
 
         @Override
-        public DemoMapField createMapField(GeoPoint index) { return new DemoMapField(index); }
+        public DemoMapField createMapField() { return new DemoMapField(new MapFieldData()); }
 
         @Override
-        public DemoMap createMap(int width, int height, MapStyle style) { return new DemoMap(width, height, style); }
+        public DemoMap createMap(int width, int height, MapStyle style) { return new DemoMap(width, height, style, new MapData()); }
 
         @Override
         public DemoMapWalker createWalker() { return new DemoMapWalker(); }
@@ -97,6 +86,33 @@ then comes the funny part, creating custom maps:
 ```
 you can see how simple the access to the ```MapFieldData``` is, since the lib is generic:
 
+### example MapWalker
+now that the data on the field has different walk cost we can make our walker to apply these changes
+
+```
+public class DemoMapWalker extends MapWalker<DemoMapField, DemoMapEdge, DemoMapNode> {
+
+    @Override
+    public boolean canEnter(DemoMapField from, DemoMapField into) {
+        return true; //can walk into any field
+    }
+
+    @Override
+    public int getEnterCosts(DemoMapField from, DemoMapField into) {
+        //here we see, how the walker applies the walk costs from the field
+        return (int) into.getData().getWalkCostFactor() * 10;
+    }
+
+    @Override
+    public List<DemoMapField> getNeighbours(DemoMapField field) {
+        //this walker can only cross over edges,
+        //but you could also pass over the nodes...
+        //return getNeighboursFromNodes(field);
+        return getNeighboursFromEdges(field);
+    }
+}
+```
+
 ### example: custom draw with ```MapFieldData```
 depending on your implementaion you do custom draw depending on your ```MapFieldData```. In Our App we use JavaFx,
 so the drawContext is of ```GraphicsContext```. you have to cast here. The idea is that you can implement
@@ -113,13 +129,14 @@ platform independ maps and use it on android or swing or whatever.
         gc.setStroke(Color.DARKGRAY);
         gc.setLineWidth(1);
 
-        double[] xs = getPointsOrdered().stream().mapToDouble(MapPoint::getTransformedX).toArray();
-        double[] ys = getPointsOrdered().stream().mapToDouble(MapPoint::getTransformedY).toArray();
-        int amount = getPoints().size();
+        Shape shape = getShape().getTransformed();
+        double[] xs = shape.getPoints().stream().mapToDouble(Point::getX).toArray();
+        double[] ys = shape.getPoints().stream().mapToDouble(Point::getY).toArray();
+        int amount = xs.length;
         gc.fillPolygon(xs,ys, amount);
 
         getEdges().forEach(e -> e.draw(drawContext));
-        getPoints().forEach(p -> p.draw(drawContext));
+        getNodes().forEach(p -> p.draw(drawContext));
     }
 ```
 

@@ -4,7 +4,7 @@ import de.elite.games.maplib.MapWalker;
 
 import java.util.List;
 
-public class DemoMapWalker extends MapWalker<DemoMapField, DemoMapEdge, DemoMapPoint> {
+public class DemoMapWalker extends MapWalker<DemoMapField, DemoMapEdge, DemoMapNode> {
 
     @Override
     public boolean canEnter(DemoMapField from, DemoMapField into) {

@@ -6,7 +6,7 @@ import de.elite.games.maplibdemo.mapdata.MapEdgeData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DemoMapEdge extends MapEdge<MapEdgeData, DemoMapField, DemoMapEdge, DemoMapPoint> {
+public class DemoMapEdge extends MapEdge<MapEdgeData, DemoMapField, DemoMapEdge, DemoMapNode> {
 
     public DemoMapEdge(MapEdgeData mapEdgeData) {
         super(mapEdgeData);

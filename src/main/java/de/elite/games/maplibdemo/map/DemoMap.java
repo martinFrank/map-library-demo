@@ -4,7 +4,7 @@ import de.elite.games.maplib.Map;
 import de.elite.games.maplib.MapStyle;
 import de.elite.games.maplibdemo.mapdata.MapData;
 
-public class DemoMap extends Map<MapData, DemoMapField, DemoMapEdge, DemoMapPoint, DemoMapWalker> {
+public class DemoMap extends Map<MapData, DemoMapField, DemoMapEdge, DemoMapNode, DemoMapWalker> {
 
 
     public DemoMap(int width, int height, MapStyle style, MapData mapData) {

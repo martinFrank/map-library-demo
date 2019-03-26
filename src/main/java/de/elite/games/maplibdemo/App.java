@@ -51,7 +51,7 @@ public class App extends Application {
         canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             int x = (int) mouseEvent.getX();
             int y = (int) mouseEvent.getY();
-            Optional<DemoMapPoint> point = demoMap.getNodeAt(x, y);
+            Optional<DemoMapNode> point = demoMap.getNodeAt(x, y);
             Optional<DemoMapEdge> edge = demoMap.getEdgeAt(x, y);
             Optional<DemoMapField> field = demoMap.getFieldAt(x, y);
             LOGGER.debug("x/y:{}/{} Point:{}", x, y, point);

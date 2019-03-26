@@ -2,14 +2,14 @@ package de.elite.games.maplibdemo.map;
 
 import de.elite.games.drawlib.Point;
 import de.elite.games.maplib.MapNode;
-import de.elite.games.maplibdemo.mapdata.MapPointData;
+import de.elite.games.maplibdemo.mapdata.MapNodeData;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class DemoMapPoint extends MapNode<MapPointData, DemoMapField, DemoMapEdge, DemoMapPoint> {
+public class DemoMapNode extends MapNode<MapNodeData, DemoMapField, DemoMapEdge, DemoMapNode> {
 
-    public DemoMapPoint(MapPointData mapPointData) {
-        super(mapPointData);
+    public DemoMapNode(MapNodeData mapNodeData) {
+        super(mapNodeData);
     }
 
     @Override
