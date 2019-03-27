@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -37,7 +38,8 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         DemoMapPartFactory mapPartFactory = new DemoMapPartFactory();
         DemoMapFactory mapFactory = new DemoMapFactory(mapPartFactory);
-        demoMap = mapFactory.createMap(12, 6, MapStyle.HEX_HORIZONTAL);
+//        demoMap = mapFactory.createMap(12, 6, MapStyle.HEX_HORIZONTAL);
+        demoMap = mapFactory.createMap(12, 6, MapStyle.SQUARE_DIAMOND);
         demoMap.scale(14f);
         walker = mapPartFactory.createWalker();
 
@@ -58,23 +60,41 @@ public class App extends Application {
             LOGGER.debug("x/y:{}/{} Edge:{}", x, y, edge);
             LOGGER.debug("x/y:{}/{} Field:{}", x, y, field);
 
+            point.ifPresent(p -> {
+                LOGGER.debug("field size: {}", p.getFields().size());
+            });
+
             if (mouseEvent.getButton() == MouseButton.PRIMARY && field.isPresent()) {
+
+//                for (DemoMapField any : demoMap.getFields()) {
+//                    any.getData().markAsPath(false);
+//                }
+
                 start = field.get();
-            }
-            if (mouseEvent.getButton() == MouseButton.SECONDARY && field.isPresent()) {
-                end = field.get();
-            }
-            if (start != null && !start.equals(end)) {
-                for (DemoMapField any : demoMap.getFields()) {
-                    any.getData().markAsPath(false);
-                }
-                List<DemoMapField> path = demoMap.aStar(start, end, walker, 100);
-                for (DemoMapField pathField : path) {
-                    pathField.getData().markAsPath(true);
-                }
+
+                List<DemoMapField> fields = new ArrayList<>();
+                start.getNodes().forEach(n -> fields.addAll(n.getFields()));
+                fields.addAll(start.getFields());
+                fields.forEach(f -> f.getData().markAsPath(!f.getData().isMarkedAsPath()));
+//                start.getFields().forEach(f -> f.getData().markAsPath(true));
+
                 GraphicsContext gc = canvas.getGraphicsContext2D();
                 drawShapes(gc);
             }
+//            if (mouseEvent.getButton() == MouseButton.SECONDARY && field.isPresent()) {
+//                end = field.get();
+//            }
+//            if (start != null && !start.equals(end)) {
+//                for (DemoMapField any : demoMap.getFields()) {
+//                    any.getData().markAsPath(false);
+//                }
+//                List<DemoMapField> path = demoMap.aStar(start, end, walker, 100);
+//                for (DemoMapField pathField : path) {
+//                    pathField.getData().markAsPath(true);
+//                }
+//                GraphicsContext gc = canvas.getGraphicsContext2D();
+//                drawShapes(gc);
+//            }
 
         });
 

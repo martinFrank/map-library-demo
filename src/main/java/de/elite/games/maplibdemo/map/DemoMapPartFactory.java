@@ -25,8 +25,8 @@ public class DemoMapPartFactory extends MapPartFactory<DemoMap, DemoMapField, De
     }
 
     @Override
-    public DemoMap createMap(int width, int height, MapStyle style) {
-        return new DemoMap(width, height, style, new MapData());
+    public DemoMap createMap(int columns, int rows, MapStyle style) {
+        return new DemoMap(columns, rows, style, new MapData());
     }
 
     @Override
