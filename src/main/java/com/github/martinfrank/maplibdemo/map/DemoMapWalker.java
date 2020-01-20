@@ -1,6 +1,6 @@
-package de.elite.games.maplibdemo.map;
+package com.github.martinfrank.maplibdemo.map;
 
-import de.elite.games.maplib.MapWalker;
+import com.github.martinfrank.maplib.MapWalker;
 
 import java.util.List;
 

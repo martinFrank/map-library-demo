@@ -1,7 +1,7 @@
-package de.elite.games.maplibdemo.map;
+package com.github.martinfrank.maplibdemo.map;
 
-import de.elite.games.maplib.MapFactory;
-import de.elite.games.maplib.MapPartFactory;
+import com.github.martinfrank.maplib.MapFactory;
+import com.github.martinfrank.maplib.MapPartFactory;
 
 public class DemoMapFactory extends MapFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapNode, DemoMapWalker> {
 

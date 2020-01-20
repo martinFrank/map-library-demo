@@ -1,4 +1,4 @@
-package de.elite.games.maplibdemo;
+package com.github.martinfrank.maplibdemo;
 
 import static org.junit.Assert.assertTrue;
 

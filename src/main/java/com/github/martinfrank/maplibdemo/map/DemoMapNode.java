@@ -1,8 +1,8 @@
-package de.elite.games.maplibdemo.map;
+package com.github.martinfrank.maplibdemo.map;
 
-import de.elite.games.drawlib.Point;
-import de.elite.games.maplib.MapNode;
-import de.elite.games.maplibdemo.mapdata.MapNodeData;
+import com.github.martinfrank.maplibdemo.mapdata.MapNodeData;
+import com.github.martinfrank.drawlib.Point;
+import com.github.martinfrank.maplib.MapNode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

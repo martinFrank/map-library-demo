@@ -1,7 +1,7 @@
-package de.elite.games.maplibdemo;
+package com.github.martinfrank.maplibdemo;
 
-import de.elite.games.maplib.MapStyle;
-import de.elite.games.maplibdemo.map.*;
+import com.github.martinfrank.maplib.MapStyle;
+import com.github.martinfrank.maplibdemo.map.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -53,48 +53,12 @@ public class App extends Application {
         canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             int x = (int) mouseEvent.getX();
             int y = (int) mouseEvent.getY();
-            Optional<DemoMapNode> point = demoMap.getNodeAt(x, y);
-            Optional<DemoMapEdge> edge = demoMap.getEdgeAt(x, y);
-            Optional<DemoMapField> field = demoMap.getFieldAt(x, y);
+            DemoMapNode point = demoMap.getNodeAt(x, y);
+            DemoMapEdge edge = demoMap.getEdgeAt(x, y);
+            DemoMapField field = demoMap.getFieldAt(x, y);
             LOGGER.debug("x/y:{}/{} Point:{}", x, y, point);
             LOGGER.debug("x/y:{}/{} Edge:{}", x, y, edge);
             LOGGER.debug("x/y:{}/{} Field:{}", x, y, field);
-
-            point.ifPresent(p -> {
-                LOGGER.debug("field size: {}", p.getFields().size());
-            });
-
-            if (mouseEvent.getButton() == MouseButton.PRIMARY && field.isPresent()) {
-
-//                for (DemoMapField any : demoMap.getFields()) {
-//                    any.getData().markAsPath(false);
-//                }
-
-                start = field.get();
-
-                List<DemoMapField> fields = new ArrayList<>();
-                start.getNodes().forEach(n -> fields.addAll(n.getFields()));
-                fields.addAll(start.getFields());
-                fields.forEach(f -> f.getData().markAsPath(!f.getData().isMarkedAsPath()));
-//                start.getFields().forEach(f -> f.getData().markAsPath(true));
-
-                GraphicsContext gc = canvas.getGraphicsContext2D();
-                drawShapes(gc);
-            }
-//            if (mouseEvent.getButton() == MouseButton.SECONDARY && field.isPresent()) {
-//                end = field.get();
-//            }
-//            if (start != null && !start.equals(end)) {
-//                for (DemoMapField any : demoMap.getFields()) {
-//                    any.getData().markAsPath(false);
-//                }
-//                List<DemoMapField> path = demoMap.aStar(start, end, walker, 100);
-//                for (DemoMapField pathField : path) {
-//                    pathField.getData().markAsPath(true);
-//                }
-//                GraphicsContext gc = canvas.getGraphicsContext2D();
-//                drawShapes(gc);
-//            }
 
         });
 

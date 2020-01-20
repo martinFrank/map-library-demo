@@ -1,11 +1,11 @@
-package de.elite.games.maplibdemo.map;
+package com.github.martinfrank.maplibdemo.map;
 
-import de.elite.games.maplib.MapPartFactory;
-import de.elite.games.maplib.MapStyle;
-import de.elite.games.maplibdemo.mapdata.MapData;
-import de.elite.games.maplibdemo.mapdata.MapEdgeData;
-import de.elite.games.maplibdemo.mapdata.MapFieldData;
-import de.elite.games.maplibdemo.mapdata.MapNodeData;
+import com.github.martinfrank.maplibdemo.mapdata.MapData;
+import com.github.martinfrank.maplibdemo.mapdata.MapEdgeData;
+import com.github.martinfrank.maplibdemo.mapdata.MapFieldData;
+import com.github.martinfrank.maplibdemo.mapdata.MapNodeData;
+import com.github.martinfrank.maplib.MapPartFactory;
+import com.github.martinfrank.maplib.MapStyle;
 
 public class DemoMapPartFactory extends MapPartFactory<DemoMap, DemoMapField, DemoMapEdge, DemoMapNode, DemoMapWalker> {
 

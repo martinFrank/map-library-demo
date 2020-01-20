@@ -1,4 +1,4 @@
-package de.elite.games.maplibdemo.mapdata;
+package com.github.martinfrank.maplibdemo.mapdata;
 
 public class MapFieldData {
 

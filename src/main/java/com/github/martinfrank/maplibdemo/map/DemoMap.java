@@ -1,8 +1,8 @@
-package de.elite.games.maplibdemo.map;
+package com.github.martinfrank.maplibdemo.map;
 
-import de.elite.games.maplib.Map;
-import de.elite.games.maplib.MapStyle;
-import de.elite.games.maplibdemo.mapdata.MapData;
+import com.github.martinfrank.maplibdemo.mapdata.MapData;
+import com.github.martinfrank.maplib.Map;
+import com.github.martinfrank.maplib.MapStyle;
 
 public class DemoMap extends Map<MapData, DemoMapField, DemoMapEdge, DemoMapNode, DemoMapWalker> {
 
